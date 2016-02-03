@@ -12,7 +12,7 @@ class MysqlDbRepository extends AbstractMysqlDbRepository
     }
 
     /**
-     * @param \Domain\Entities\ClientEntity $client [description]
+     * @param ClientEntity $client [description]
      *
      * @return bool
      */
@@ -26,9 +26,9 @@ class MysqlDbRepository extends AbstractMysqlDbRepository
     }
 
     /**
-     * @param \Domain\Entities\ClientEntity $client [description]
+     * @param ClientEntity $client [description]
      *
-     * @return array
+     * @return bool || array
      */
     public function search(ClientEntity $client)
     {

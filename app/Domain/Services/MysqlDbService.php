@@ -10,6 +10,9 @@ class MysqlDbService
 {
     private $repository;
 
+    /**
+     * @param MysqlDbRepository
+     */
     public function __construct($repository)
     {
         if (!$repository instanceof MysqlDbRepository) {
@@ -24,6 +27,11 @@ class MysqlDbService
         return $this->repository;
     }
 
+    /**
+     * @param  ClientEntity
+     *
+     * @return bool
+     */
     public function save($client)
     {
         if (!$client instanceof ClientEntity) {
@@ -34,9 +42,9 @@ class MysqlDbService
     }
 
     /**
-     * @var \Domain\Entities\ClientEntity
+     * @var ClientEntity
      *
-     * @return \Domain\Collectors\ClientCollector
+     * @return ClientCollector
      */
     public function search($client)
     {
@@ -48,10 +56,14 @@ class MysqlDbService
 
         $clientCollector = new ClientCollector();
 
+        if (!$result) {
+            return $clientCollector;
+        }
+
         foreach ($result as $users) {
             $clientEntity = new ClientEntity();
 
-            $clientEntity->setId((string) $users['id']);
+            $clientEntity->setId($users['id']);
             $clientEntity->setFirstName($users['first_name']);
             $clientEntity->setLastName($users['last_name']);
             $clientEntity->setEmail($users['email']);
