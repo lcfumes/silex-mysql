@@ -1,8 +1,8 @@
-doctrine_mongodb:
+doctrine_mysql:
     connections:
-        server: mongodb://mongodb.dev:27017
+        server: mysql.dev
+        database: clients
+        user: root
+        password: root
         options: {}
-    database: clients
-    document_managers:
-        default:
-            auto_mapping: true
+    database: users

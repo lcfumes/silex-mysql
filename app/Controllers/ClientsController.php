@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Silex\ControllerProviderInterface;
 use app\Domain\Entities\ClientEntity;
 use app\Provider\Form\SearchClientFormProvider;
-use app\Domain\Services\MongoDbService;
-use app\Domain\Repositories\MongoDbRepository;
+use app\Domain\Services\MysqlDbService;
+use app\Domain\Repositories\MysqlDbRepository;
 use app\Provider\Form\CreateClientFormProvider;
 
 class ClientsController implements ControllerProviderInterface
@@ -46,24 +46,24 @@ class ClientsController implements ControllerProviderInterface
             $clientEntity->setEmail($data['email']);
             $clientEntity->setAge($data['age']);
 
-            $mongoDbService = new MongoDbService(new MongoDbRepository($app['config']));
-            $result = $mongoDbService->save($clientEntity);
+            $mysqlDbService = new MysqlDbService(new MysqlDbRepository($app['dbs']));
+            $result = $mysqlDbService->save($clientEntity);
 
-            if ($result instanceof \MongoDB\InsertOneResult) {
+            if ($result) {
                 return new Response(
-                        json_encode(['id' => (string) $result->getInsertedId(), 'result' => true]),
-                        200,
-                        ['Content-Type' => 'application/json']
+                    json_encode(['result' => true]),
+                    200,
+                    ['Content-Type' => 'application/json']
 
-                    );
+                );
             }
         }
 
         return new Response(
-                json_encode(['result' => false]),
-                503,
-                ['Content-Type' => 'application/json']
-            );
+            json_encode(['result' => false]),
+            503,
+            ['Content-Type' => 'application/json']
+        );
     }
 
     public function searchAction(Request $request, Application $app)
@@ -74,7 +74,7 @@ class ClientsController implements ControllerProviderInterface
 
         $form->handleRequest($request);
         if ($request->getMethod() === 'POST' && $form->isValid()) {
-            $mongoDbService = new MongoDbService(new MongoDbRepository($app['config']));
+            $mysqlDbService = new MysqlDbService(new MysqlDbRepository($app['dbs']));
 
             $data = $request->request->get('form');
 
@@ -84,7 +84,7 @@ class ClientsController implements ControllerProviderInterface
             $clientEntity->setEmail($data['email']);
             $clientEntity->setAge($data['age']);
 
-            $search = $mongoDbService->search($clientEntity);
+            $search = $mysqlDbService->search($clientEntity);
 
             return new Response(
                 json_encode($search->toArray()),

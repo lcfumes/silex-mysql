@@ -4,7 +4,7 @@ namespace app\Domain\Repositories;
 
 use app\Domain\Entities\ClientEntity;
 
-class MongoDbRepository extends AbstractMongoDbRepository
+class MysqlDbRepository extends AbstractMysqlDbRepository
 {
     public function __construct($config)
     {
@@ -14,17 +14,22 @@ class MongoDbRepository extends AbstractMongoDbRepository
     /**
      * @param \Domain\Entities\ClientEntity $client [description]
      *
-     * @return false | \MongoDB\InsertOneResult
+     * @return bool
      */
     public function save(ClientEntity $client)
     {
-        try {
-            return $this->mongoCollection->insertOne($client->toArray());
-        } catch (\Exception $e) {
+        if (count($client->toArray()) === 0) {
             return false;
         }
+
+        return $this->dbConnection['mysql_read']->insert('users', $client->toArray());
     }
 
+    /**
+     * @param \Domain\Entities\ClientEntity $client [description]
+     *
+     * @return array
+     */
     public function search(ClientEntity $client)
     {
         $search = [];
@@ -41,6 +46,16 @@ class MongoDbRepository extends AbstractMongoDbRepository
             $search['age'] = $client->getAge();
         }
 
-        return $this->mongoCollection->find($search);
+        if (count($search) === 0) {
+            return false;
+        }
+
+        $conditional = '';
+        foreach ($search as $key => $value) {
+            $conditional .= $key.'='."'".$value."'".' AND ';
+        }
+        $conditional = substr($conditional, 0, -5);
+
+        return $this->dbConnection['mysql_read']->fetchAll('SELECT id, first_name, last_name, email, age FROM users WHERE '.$conditional.' ORDER BY first_name');
     }
 }

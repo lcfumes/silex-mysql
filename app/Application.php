@@ -32,6 +32,27 @@ class Application extends SilexApplication
         $this->register(new \Silex\Provider\ValidatorServiceProvider());
         $this->register(new \Silex\Provider\FormServiceProvider());
         $this->register(new \Silex\Provider\TranslationServiceProvider(), ['translator.messages' => []]);
+
+        $this->register(new Silex\Provider\DoctrineServiceProvider(), array(
+            'dbs.options' => array(
+                'mysql_read' => array(
+                    'driver' => 'pdo_mysql',
+                    'host' => $this['config']['doctrine_mysql']['connections']['server'],
+                    'dbname' => $this['config']['doctrine_mysql']['connections']['database'],
+                    'user' => $this['config']['doctrine_mysql']['connections']['user'],
+                    'password' => $this['config']['doctrine_mysql']['connections']['password'],
+                    'charset' => 'utf8',
+                ),
+                'mysql_write' => array(
+                    'driver' => 'pdo_mysql',
+                    'host' => $this['config']['doctrine_mysql']['connections']['server'],
+                    'dbname' => $this['config']['doctrine_mysql']['connections']['database'],
+                    'user' => $this['config']['doctrine_mysql']['connections']['user'],
+                    'password' => $this['config']['doctrine_mysql']['connections']['password'],
+                    'charset' => 'utf8',
+                ),
+            ),
+        ));
     }
 
     private function mountControllers()

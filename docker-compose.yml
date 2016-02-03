@@ -1,20 +1,21 @@
-mongodbpoc:
+silexmysql:
     build: "./docker/"
     ports:
         - "80:80"
     volumes:
         - ./docker/web.conf:/etc/nginx/sites-available/default
-        - ./:/catalog
+        - ./:/project
     environment:
-        - VIRTUAL_HOST=mongopoc.dev
+        - VIRTUAL_HOST=silex-mysql.dev
     links:
-        - mongo:mongodb.dev
+        - mysql:mysql.dev
 
-mongo:
-    image: mongo:latest
+mysql:
+    image: mysql:latest
     ports:
-        - "27017:27017"
+        - "3306:3306"
     volumes:
-        - ./:/catalog
+        - ./:/project
     environment:
-        - VIRTUAL_HOST:mongodb.dev
+        - VIRTUAL_HOST:mysql.dev
+        - MYSQL_ROOT_PASSWORD=root

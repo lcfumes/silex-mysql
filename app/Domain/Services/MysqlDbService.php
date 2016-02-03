@@ -4,16 +4,16 @@ namespace app\Domain\Services;
 
 use app\Domain\Collectors\ClientCollector;
 use app\Domain\Entities\ClientEntity;
-use app\Domain\Repositories\MongoDbRepository;
+use app\Domain\Repositories\MysqlDbRepository;
 
-class MongoDbService
+class MysqlDbService
 {
     private $repository;
 
     public function __construct($repository)
     {
-        if (!$repository instanceof MongoDbRepository) {
-            throw new \InvalidArgumentException('Expected MongoDbRepository in MongoDbService');
+        if (!$repository instanceof MysqlDbRepository) {
+            throw new \InvalidArgumentException('Expected MysqlDbRepository in MysqlDbService');
         }
 
         $this->repository = $repository;
@@ -51,7 +51,7 @@ class MongoDbService
         foreach ($result as $users) {
             $clientEntity = new ClientEntity();
 
-            $clientEntity->setId((string) $users['_id']);
+            $clientEntity->setId((string) $users['id']);
             $clientEntity->setFirstName($users['first_name']);
             $clientEntity->setLastName($users['last_name']);
             $clientEntity->setEmail($users['email']);

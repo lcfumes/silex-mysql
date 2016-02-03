@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.org/lcfumes/silex-mongodb.svg?branch=master)](https://travis-ci.org/lcfumes/silex-mongodb.svg?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lcfumes/silex-mongodb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lcfumes/silex-mongodb/badges/quality-score.png?b=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/lcfumes/silex-mongodb/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lcfumes/silex-mongodb/badges/coverage.png?b=master)
+[![Build Status](https://travis-ci.org/lcfumes/silex-mysqldb.svg?branch=master)](https://travis-ci.org/lcfumes/silex-mysqldb.svg?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lcfumes/silex-mysqldb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lcfumes/silex-mysqldb/badges/quality-score.png?b=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/lcfumes/silex-mysqldb/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lcfumes/silex-mysqldb/badges/coverage.png?b=master)
 
 ## Instalation
 
 
-# Silex with MongoDB 
-Silex with MongoDB 
+# Silex with Mysql
+Silex with Mysql
 
 ## Docker ##
 
@@ -67,14 +67,14 @@ add in
 ```
 sudo vim /etc/hosts
 
-127.0.0.1 mongopoc.dev 
-127.0.0.1 mongodb.dev
+127.0.0.1 silex-mysql.dev
+127.0.0.1 mysql.dev
 ```
 
 ## web ##
 
 ```
-http://mongoproc.dev
+http://http://silex-mysql.dev
 ```
 
 Contact: Luiz Fumes <lcfumes@gmail.com>
