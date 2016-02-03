@@ -12,6 +12,7 @@ class MysqlDbService
 
     /**
      * @param MysqlDbRepository
+     * @param MysqlDbRepository $repository
      */
     public function __construct($repository)
     {
@@ -44,6 +45,7 @@ class MysqlDbService
     /**
      * @var ClientEntity
      *
+     * @param ClientEntity $client
      * @return ClientCollector
      */
     public function search($client)
